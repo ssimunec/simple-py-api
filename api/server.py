@@ -3,7 +3,6 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 CORS(app)
-debug = False
 
 
 @app.route('/hello', methods=['GET', 'POST'])
