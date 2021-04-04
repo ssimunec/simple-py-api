@@ -1,0 +1,17 @@
+version: "3.4"
+
+services:
+    simpleapi:
+        image: simpleapi
+        build:
+          context: .
+          dockerfile: api/Dockerfile
+        ports:
+          - "8090:8004"        
+        restart: always
+        container_name: sim-api
+        networks:
+          - simple_api_network
+networks:
+    simple_api_network:
+        driver: bridge
