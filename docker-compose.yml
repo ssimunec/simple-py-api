@@ -1,17 +1,29 @@
+# verzija docker compose "formata"
 version: "3.4"
 
+# lista servisa
 services:
     simpleapi:
+        # ime image-a
         image: simpleapi
+        # kako se build-a image
         build:
+          # sa koje lokacije posmatramo file-ove
+          # ovde je to root, znaci requirements.txt je na api/requirements.txt u dockerfile-u
           context: .
+          # koji docker file koristimo za servis
           dockerfile: api/Dockerfile
-        ports:
+        # mapiranje portova externi:interni
+        ports:          
           - "8090:8004"        
+        # restart on fail
         restart: always
+        # ime containera kada je startovan
         container_name: sim-api
+        # mreza
         networks:
           - simple_api_network
+# lista mreza
 networks:
     simple_api_network:
         driver: bridge
