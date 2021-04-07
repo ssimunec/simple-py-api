@@ -23,6 +23,17 @@ services:
         # mreza
         networks:
           - simple_api_network
+    simplefront:
+        image: simplefront
+        build:
+          context: .
+          dockerfile: front/Dockerfile
+        ports:
+          - "8091:80"
+        restart: always
+        container_name: sim-front
+        networks:
+          - simple_api_network
 # lista mreza
 networks:
     simple_api_network:
