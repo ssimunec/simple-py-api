@@ -3,37 +3,68 @@ version: "3.4"
 
 # lista servisa
 services:
+    # mongo baza
+    db:
+      # image sa dockeer hub-a
+      image: mongo
+      restart: always
+      # podesavanje servera
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: 123
+        container_name: sim-db
+      # portovi ka spoljnom svetu
+      ports:          
+        - "27017:27017"
+      # mreza kojoj pripada      
+      networks:
+        - simple_api_network
+    # mongo admin
+    dbadmin:
+      # image sa dockeer hub-a
+      image: mongo-express
+      restart: always
+      container_name: sim-db-admin
+      ports:
+        - 8081:8081
+      environment:
+        ME_CONFIG_MONGODB_SERVER: db
+        ME_CONFIG_MONGODB_ADMINUSERNAME: root
+        ME_CONFIG_MONGODB_ADMINPASSWORD: 123
+      # mreza kojoj pripada
+      networks:
+        - simple_api_network
     simpleapi:
-        # ime image-a
-        image: simpleapi
-        # kako se build-a image
-        build:
-          # sa koje lokacije posmatramo file-ove
-          # ovde je to root, znaci requirements.txt je na api/requirements.txt u dockerfile-u
-          context: .
-          # koji docker file koristimo za servis
-          dockerfile: api/Dockerfile
-        # mapiranje portova externi:interni
-        ports:          
-          - "8090:8004"        
-        # restart on fail
-        restart: always
-        # ime containera kada je startovan
-        container_name: sim-api
-        # mreza
-        networks:
-          - simple_api_network
+      # ime image-a
+      image: simpleapi
+      # kako se build-a image
+      build:
+        # sa koje lokacije posmatramo file-ove
+        # ovde je to root, znaci requirements.txt je na api/requirements.txt u dockerfile-u
+        context: .
+        # koji docker file koristimo za servis
+        dockerfile: api/Dockerfile
+      # mapiranje portova externi:interni
+      ports:          
+        - "8090:8004"        
+      # restart on fail
+      restart: always
+      # ime containera kada je startovan
+      container_name: sim-api
+      # mreza
+      networks:
+        - simple_api_network
     simplefront:
-        image: simplefront
-        build:
-          context: .
-          dockerfile: front/Dockerfile
-        ports:
-          - "8091:80"
-        restart: always
-        container_name: sim-front
-        networks:
-          - simple_api_network
+      image: simplefront
+      build:
+        context: .
+        dockerfile: front/Dockerfile
+      ports:
+        - "8091:80"
+      restart: always
+      container_name: sim-front    
+      networks:
+      - simple_api_network
 # lista mreza
 networks:
     simple_api_network:

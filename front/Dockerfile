@@ -9,7 +9,7 @@ FROM basebuild as build
 # setujemo folder gde cemo kopirati code od angulara
 WORKDIR /app
 # cache buster - zelimo uvek nove angular fielove
-ADD https://google.com cache_bust
+# ADD https://google.com cache_bust
 # kopiramo angular files iz front foldera
 COPY front/ .
 # instaliramo biblioteke iz package.json koje su potrebne angularu
