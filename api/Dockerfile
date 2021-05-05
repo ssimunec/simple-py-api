@@ -23,5 +23,14 @@ ADD https://google.com cache_buster
 # kopiramo source iz api foldera ( sve ) - kontext je root projekta preslikano iz compose-a
 COPY "api/" .
 
+# pre nego sto pokrenemo server, idemo u root
+WORKDIR /
+
+# pravim folder storage
+RUN mkdir storage
+
+# vracam se u folder gde je aplikacija i python fileovi
+WORKDIR /app
+
 # ovim pokrecemo api tj program
 CMD [ "python", "-u", "./server.py" ]

@@ -16,6 +16,8 @@ services:
       # portovi ka spoljnom svetu
       ports:          
         - "27017:27017"
+      volumes: 
+        - /d/Docker/volumes/simmongo:/data/db
       # mreza kojoj pripada      
       networks:
         - simple_api_network
@@ -51,6 +53,8 @@ services:
       restart: always
       # ime containera kada je startovan
       container_name: sim-api
+      volumes: 
+        - /d/Docker/volumes/simpleapi:/storage
       # mreza
       networks:
         - simple_api_network
